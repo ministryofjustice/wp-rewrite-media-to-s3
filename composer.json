@@ -1,0 +1,14 @@
+{
+    "name": "ministryofjustice/rewrite-media-to-s3",
+    "description": "A WordPress plugin which rewrites media attachment URLs to S3.",
+    "type": "wordpress-plugin",
+    "require": {
+        "composer/installers": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "Ollie Treend",
+            "email": "ollie.treend@digital.justice.gov.uk"
+        }
+    ]
+}

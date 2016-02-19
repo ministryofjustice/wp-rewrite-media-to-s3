@@ -1,2 +1,4 @@
 # PhpStorm IDE files
 .idea
+
+/vendor/
