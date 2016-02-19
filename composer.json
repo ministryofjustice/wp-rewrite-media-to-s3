@@ -1,5 +1,5 @@
 {
-    "name": "ministryofjustice/rewrite-media-to-s3",
+    "name": "ministryofjustice/wp-rewrite-media-to-s3",
     "description": "A WordPress plugin which rewrites media attachment URLs to S3.",
     "type": "wordpress-plugin",
     "require": {
