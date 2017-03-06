@@ -31,8 +31,8 @@ class Plugin
      */
     public function registerHooks()
     {
-        add_filter('wp_get_attachment_url', array($this, 'wpGetAttachmentUrl'), 99, 2);
-        add_filter('wp_calculate_image_srcset', array($this, 'wpCalculateImageSrcset'), 99, 5);
+        add_filter('wp_get_attachment_url', array($this, 'wpGetAttachmentUrl'), 9, 2);
+        add_filter('wp_calculate_image_srcset', array($this, 'wpCalculateImageSrcset'), 9, 5);
     }
 
     /**
@@ -43,8 +43,8 @@ class Plugin
      */
     public function deregisterHooks()
     {
-        remove_filter('wp_get_attachment_url', array($this, 'wpGetAttachmentUrl'), 99);
-        remove_filter('wp_calculate_image_srcset', array($this, 'wpCalculateImageSrcset'), 99);
+        remove_filter('wp_get_attachment_url', array($this, 'wpGetAttachmentUrl'), 9);
+        remove_filter('wp_calculate_image_srcset', array($this, 'wpCalculateImageSrcset'), 9);
     }
 
     /**
