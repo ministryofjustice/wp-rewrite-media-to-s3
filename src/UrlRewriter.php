@@ -46,6 +46,12 @@ class UrlRewriter
     {
         if (stripos($url, $this->localBase) === 0) {
             $url = substr($url, strlen($this->localBase));
+
+            var_dump(S3_SIGN_URLS);die();
+            if (defined('S3_SIGN_URLS') && (string)S3_SIGN_URLS === 'true') {
+                $url = new Signature($url);
+            }
+
             $url = $this->cdnBase . $url;
         }
 
