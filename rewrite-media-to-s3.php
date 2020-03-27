@@ -14,7 +14,11 @@ $uploadDir = wp_upload_dir();
 $localBase = $uploadDir['baseurl'];
 
 if (defined('S3_UPLOADS_BASE_URL') && !empty(S3_UPLOADS_BASE_URL)) {
-    $UrlRewriter = new UrlRewriter($localBase, S3_UPLOADS_BASE_URL);
+    $signed = null;
+    if (defined('S3_SIGN_URLS') && (string)S3_SIGN_URLS !== 'false') {
+        $signed = new Signature();
+    }
+    $UrlRewriter = new UrlRewriter($localBase, S3_UPLOADS_BASE_URL, $signed);
     $RewriteMediaToS3 = new Plugin($UrlRewriter);
     $RewriteMediaToS3->registerHooks();
 }

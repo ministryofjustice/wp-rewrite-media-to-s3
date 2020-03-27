@@ -24,15 +24,24 @@ class UrlRewriter
     private $cdnBase = null;
 
     /**
+     * Class object used to sign urls
+     *
+     * @var mixed (class object | null)
+     */
+    private $signed = null;
+
+    /**
      * UrlRewriter constructor.
      *
      * @param string $localUploadsBaseUrl Base URL for local uploads directory.
      * @param string $cdnUploadsBaseUrl Base URL for the uploads directory on the CDN.
+     * @param mixed $signed Class object used to sign urls, or null
      */
-    public function __construct($localUploadsBaseUrl, $cdnUploadsBaseUrl)
+    public function __construct($localUploadsBaseUrl, $cdnUploadsBaseUrl, $signed)
     {
         $this->localBase = $localUploadsBaseUrl;
-        $this->cdnBase   = $cdnUploadsBaseUrl;
+        $this->cdnBase = $cdnUploadsBaseUrl;
+        $this->signed = $signed;
     }
 
     /**
@@ -46,7 +55,20 @@ class UrlRewriter
     {
         if (stripos($url, $this->localBase) === 0) {
             $url = substr($url, strlen($this->localBase));
+
+            if ($this->signed) {
+                return $this->signed->uri($url);
+            }
+
             $url = $this->cdnBase . $url;
+        }
+
+        if ($this->signed) {
+            if (stripos($url, $this->cdnBase) === 0) {
+                $url = substr($url, strlen($this->cdnBase));
+            }
+
+            return $this->signed->uri($url);
         }
 
         return $url;
