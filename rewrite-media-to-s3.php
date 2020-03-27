@@ -9,13 +9,16 @@ namespace MOJDigital\RewriteMediaToS3;
 
 require 'autoload.php';
 
-// Instantiate the class and register hooks
 $uploadDir = wp_upload_dir();
 $localBase = $uploadDir['baseurl'];
 
+// define S3_SIGN_URLS
+define('S3_SIGN_URLS', env('S3_SIGN_URLS') ?: false);
+
+// Instantiate the class and register hooks
 if (defined('S3_UPLOADS_BASE_URL') && !empty(S3_UPLOADS_BASE_URL)) {
     $signed = null;
-    if (defined('S3_SIGN_URLS') && (string)S3_SIGN_URLS !== 'false') {
+    if (S3_SIGN_URLS !== false) {
         $signed = new Signature();
     }
     $UrlRewriter = new UrlRewriter($localBase, S3_UPLOADS_BASE_URL, $signed);
