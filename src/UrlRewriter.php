@@ -53,22 +53,13 @@ class UrlRewriter
      */
     public function rewriteUrl($url)
     {
-        if (stripos($url, $this->localBase) === 0) {
-            $url = substr($url, strlen($this->localBase));
-
-            if ($this->signed) {
-                return $this->signed->uri($url);
-            }
-
-            $url = $this->cdnBase . $url;
+        if ($this->signed) {
+            return $this->signed->uri($url);
         }
 
-        if ($this->signed) {
-            if (stripos($url, $this->cdnBase) === 0) {
-                $url = substr($url, strlen($this->cdnBase));
-            }
-
-            return $this->signed->uri($url);
+        if (stripos($url, $this->localBase) === 0) {
+            $url = substr($url, strlen($this->localBase));
+            $url = $this->cdnBase . $url;
         }
 
         return $url;

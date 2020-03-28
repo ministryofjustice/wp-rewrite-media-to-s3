@@ -35,11 +35,34 @@ class Signature
         $this->bucket = env('AWS_S3_BUCKET') ?: false;
     }
 
+    /**
+     * Return a signed URL
+     * @param $uri
+     * @return string
+     */
     public function uri($uri)
     {
+        $url_parts = parse_url($uri);
+        if (!empty($url_parts['query'])) {
+            parse_str($url_parts['query'], $query_parts);
+            if (isset($query_parts['X-Amz-Content-Sha256'])) {
+                return $uri;
+            }
+        }
+
+        $uri = ltrim($url_parts['path'], '/');
+
+        if (strpos($uri, 'uploads') === false) {
+            $uri = 'uploads/' . ltrim($uri, '/');
+        }
+
+        if (strpos($uri, 'app') >= 0) {
+            $uri = str_replace('app/', '', $uri);
+        }
+
         $cmd = $this->client->getCommand('GetObject', [
             'Bucket' => $this->bucket,
-            'Key' => 'uploads' . $uri
+            'Key' => $uri
         ]);
 
         $request = $this->client->createPresignedRequest($cmd, '+5 minutes');

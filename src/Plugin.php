@@ -10,7 +10,7 @@ class Plugin
     /**
      * Holds the UrlRewriter object.
      *
-     * @var \MOJDigital\RewriteMediaToS3\UrlRewriter
+     * @var UrlRewriter
      */
     public $UrlRewriter = null;
 
@@ -32,6 +32,7 @@ class Plugin
     public function registerHooks()
     {
         add_filter('wp_get_attachment_url', array($this, 'wpGetAttachmentUrl'), 9, 2);
+        add_filter('wp_get_attachment_image_src', array($this, 'wpGetAttachmentImageSrc'), 99, 4);
         add_filter('wp_calculate_image_srcset', array($this, 'wpCalculateImageSrcset'), 9, 5);
     }
 
@@ -58,6 +59,23 @@ class Plugin
     public function wpGetAttachmentUrl($url, $post_id)
     {
         return $this->UrlRewriter->rewriteUrl($url);
+    }
+
+    /**
+     * Filter the attachment Image src URL.
+     *
+     * @param $image
+     * @param int $post_id Attachment ID.
+     *
+     * @param $size
+     * @param $icon
+     * @return string
+     */
+    public function wpGetAttachmentImageSrc($image, $post_id, $size, $icon)
+    {
+        $url = $this->UrlRewriter->rewriteUrl($image[0]);
+        $image[0] = $url;
+        return $image;
     }
 
     /**

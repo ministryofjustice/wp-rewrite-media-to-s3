@@ -14,6 +14,7 @@ $localBase = $uploadDir['baseurl'];
 
 // define S3_SIGN_URLS
 define('S3_SIGN_URLS', env('S3_SIGN_URLS') ?: false);
+define('REWRITE_DEBUG', 0);
 
 // Instantiate the class and register hooks
 if (defined('S3_UPLOADS_BASE_URL') && !empty(S3_UPLOADS_BASE_URL)) {
