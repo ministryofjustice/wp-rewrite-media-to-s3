@@ -1,8 +1,27 @@
 <?php
 
 /**
- * Plugin name: Rewrite Media to CDN
- * Description: This plugin will rewrite media asset URLs to their equivalent CDN URL.
+ * The file responsible for starting the Rewrite Media to CDN plugin
+ *
+ * The Rewrite Media to CDN is a plugin that rewrites the domain path
+ * of images, documents and other assets to a defined domain.
+ * It also signs URLs with a secure hash so it can be verified
+ * it has been requrested from the site and the s3 bucket allows it.
+ * This particular file is responsible for
+ * including the necessary dependencies and starting the plugin.
+ *
+ * @package Rewrite Media to CDN
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Rewrite Media to CDN
+ * Plugin URI:        https://github.com/ministryofjustice/wp-rewrite-media-to-s3
+ * Description:       This plugin will rewrite media asset and sign URLs to their equivalent CDN URL.
+ * Version:           0.2.3
+ * Text Domain:       rewrite-media-cdn
+ * Author:            Ministry of Justice
+ * License:           The MIT License (MIT)
+ * License URI:       https://opensource.org/licenses/MIT
+ * Copyright:         Crown Copyright (c) 2018 Ministry of Justice
  */
 
 namespace MOJDigital\RewriteMediaToS3;
