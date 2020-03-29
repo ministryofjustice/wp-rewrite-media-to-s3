@@ -8,21 +8,29 @@
 namespace MOJDigital\RewriteMediaToS3;
 
 require 'autoload.php';
+require_once('src/settings.php');
 
 $uploadDir = wp_upload_dir();
 $localBase = $uploadDir['baseurl'];
 
 // define S3_SIGN_URLS
-define('S3_SIGN_URLS', env('S3_SIGN_URLS') ?: false);
-define('REWRITE_DEBUG', 0);
+$s3SignUrlOptions = get_option('rewrite_media_to_s3_settings', []);
+define(
+    'S3_SIGN_URLS',
+    (
+    isset($s3SignUrlOptions['create_secure_urls_select'])
+        ? $s3SignUrlOptions['create_secure_urls_select']
+        : false
+    )
+);
 
 // Instantiate the class and register hooks
 if (defined('S3_UPLOADS_BASE_URL') && !empty(S3_UPLOADS_BASE_URL)) {
-    $signed = null;
-    if (S3_SIGN_URLS !== false) {
-        $signed = new Signature();
+    $Signed = null;
+    if (S3_SIGN_URLS === 'yes') {
+        $Signed = new Signature();
     }
-    $UrlRewriter = new UrlRewriter($localBase, S3_UPLOADS_BASE_URL, $signed);
-    $RewriteMediaToS3 = new Plugin($UrlRewriter);
+    $UrlRewrite = new UrlRewriter($localBase, S3_UPLOADS_BASE_URL, $Signed);
+    $RewriteMediaToS3 = new Plugin($UrlRewrite);
     $RewriteMediaToS3->registerHooks();
 }
