@@ -17,6 +17,11 @@ class Signature
      */
     public $bucket = null;
 
+    /**
+     * @var array
+     */
+    private $excludePostTypes;
+
     public function __construct()
     {
         try {
@@ -33,15 +38,25 @@ class Signature
         }
 
         $this->bucket = env('AWS_S3_BUCKET') ?: false;
+
+        $this->excludePostTypes = [
+            'document'
+        ];
     }
 
     /**
-     * Return a signed URL
+     * Get a signed URL
      * @param $uri
      * @return string
      */
     public function uri($uri)
     {
+        global $post;
+
+        if (in_array($post->post_type, $this->excludePostTypes)) {
+            return $uri;
+        }
+
         $url_parts = parse_url($uri);
         if (!empty($url_parts['query'])) {
             parse_str($url_parts['query'], $query_parts);
