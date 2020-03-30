@@ -53,7 +53,7 @@ function rewrite_media_to_s3_text_field_1_render()
 {
     $options = get_option('rewrite_media_to_s3_settings');
     ?>
-    <input type="text" value="<?= $options['exclusion_list_of_cpt'] ?: '' ?>" placeholder="separate with a comma" name='rewrite_media_to_s3_settings[create_secure_urls_select]'>
+    <input type="text" value="<?= $options['exclusion_list_of_cpt'] ?: '' ?>" placeholder="separate with a comma" name='rewrite_media_to_s3_settings[exclusion_list_of_cpt]'>
     <p>Enter custom post types separated by comma to exclude from url signing.</p>
     <?php
 }
