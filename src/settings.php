@@ -33,7 +33,7 @@ function rewrite_media_to_s3_settings_init()
     );
 
     add_settings_field(
-        'rewrite_media_to_s3_select',
+        'rewrite_media_to_s3_exclude',
         __('Exclude CPT', 'wordpress'),
         'rewrite_media_to_s3_text_field_1_render',
         'rewrite_media_to_s3_plugin',
