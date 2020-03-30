@@ -20,7 +20,7 @@ class Signature
     /**
      * @var array
      */
-    private $excludePostTypes;
+    private $excludePostTypes = [];
 
     public function __construct()
     {
@@ -39,9 +39,7 @@ class Signature
 
         $this->bucket = env('AWS_S3_BUCKET') ?: false;
 
-        $this->excludePostTypes = [
-            'document'
-        ];
+        $this->excludePostTypes = $this->excluded();
     }
 
     /**
@@ -89,5 +87,21 @@ class Signature
         $request = $this->client->createPresignedRequest($cmd, '+' . $expires_time);
 
         return (string)$request->getUri();
+    }
+
+    /**
+     * @return array
+     */
+    private function excluded()
+    {
+        $options = get_option('rewrite_media_to_s3_settings', []);
+        if (isset($options['exclusion_list_of_cpt']) && !empty($options['exclusion_list_of_cpt'])) {
+            $excluded = explode(',', str_replace(' ', '', $options['exclusion_list_of_cpt']));
+            if (is_array($excluded)) {
+                return $excluded;
+            }
+        }
+
+        return [];
     }
 }
