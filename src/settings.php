@@ -25,6 +25,14 @@ function rewrite_media_to_s3_settings_init()
     );
 
     add_settings_field(
+        'rewrite_media_to_s3_select_expire',
+        __('Expiry Time:', 'wordpress'),
+        'rewrite_media_to_s3_select_field_2_render',
+        'rewrite_media_to_s3_plugin',
+        'rewrite_media_to_s3_settings_section'
+    );
+
+    add_settings_field(
         'rewrite_media_to_s3_select',
         __('Activation', 'wordpress'),
         'rewrite_media_to_s3_select_field_1_render',
@@ -43,6 +51,31 @@ function rewrite_media_to_s3_select_field_1_render()
         <option value='yes' <?php selected($options['create_secure_urls_select'], 'yes'); ?>>Yes</option>
     </select>
 
+    <?php
+}
+
+function rewrite_media_to_s3_select_field_2_render()
+{
+    $options = get_option('rewrite_media_to_s3_settings');
+
+    $option_values = [
+        'option_1' => '30 seconds',
+        'option_2' => '1 minute',
+        'option_3' => '5 minutes',
+        'option_4' => '10 minutes',
+        'option_5' => '20 minutes',
+        'option_6' => '30 minutes'
+    ];
+    ?>
+    <select name='rewrite_media_to_s3_settings[secure_expiry_time]'>
+        <option value='' disabled="disabled">URLs expire after:</option>
+        <?php
+        foreach ($option_values as $value) {
+            echo "<option value='" . $value . "' " . selected($options['secure_expiry_time'], $value) . ">" . $value . "</option>";
+        }
+        ?>
+    </select>
+    <p>Define the 'end of life' time for a media URL. The time starts once a request for the media has been made by a browser.<br>Once time has expired the media on S3 will no longer be accessible.</p>
     <?php
 }
 

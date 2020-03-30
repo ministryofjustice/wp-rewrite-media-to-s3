@@ -29,7 +29,7 @@ class Signature
                 ]
             ]);
         } catch (AwsException $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n";
+            trigger_error('AWS S3Client caught exception: ' . $e->getMessage(), E_USER_WARNING);
         }
 
         $this->bucket = env('AWS_S3_BUCKET') ?: false;
@@ -65,7 +65,13 @@ class Signature
             'Key' => $uri
         ]);
 
-        $request = $this->client->createPresignedRequest($cmd, '+5 minutes');
+        $expires_time = '5 minutes';
+        $expires = get_option('rewrite_media_to_s3_settings', []);
+        if (!empty($expires) && isset($expires['secure_expiry_time'])) {
+            $expires_time = $expires['secure_expiry_time'];
+        }
+
+        $request = $this->client->createPresignedRequest($cmd, '+' . $expires_time);
 
         return (string)$request->getUri();
     }
