@@ -15,7 +15,7 @@
  * Plugin Name:       Rewrite Media to CDN
  * Plugin URI:        https://github.com/ministryofjustice/wp-rewrite-media-to-s3
  * Description:       This plugin will rewrite media asset and sign URLs to their equivalent CDN URL.
- * Version:           0.2.9
+ * Version:           0.2.10
  * Text Domain:       rewrite-media-cdn
  * Author:            Ministry of Justice
  * Author URI:        https://github.com/ministryofjustice
