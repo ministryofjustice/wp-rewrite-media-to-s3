@@ -10,5 +10,8 @@
             "name": "Ollie Treend",
             "email": "ollie.treend@digital.justice.gov.uk"
         }
-    ]
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.1"
+    }
 }

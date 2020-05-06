@@ -2,7 +2,9 @@
 
 namespace MOJDigital\RewriteMediaToS3;
 
-class PluginTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class PluginTest extends TestCase
 {
     /**
      * @covers \MOJDigital\RewriteMediaToS3\Plugin::__construct
