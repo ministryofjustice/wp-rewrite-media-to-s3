@@ -59,6 +59,15 @@ class UrlRewriter
 
         if (stripos($url, $this->localBase) === 0) {
             $url = substr($url, strlen($this->localBase));
+
+            if (is_multisite()) {
+                $blog_id = get_current_blog_id();
+                if ($blog_id > 1) {
+                    $prefix = "/sites/" . $blog_id;
+                    $url = $prefix . $url;
+                }
+            }
+
             $url = $this->cdnBase . $url;
         }
 
