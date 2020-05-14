@@ -52,7 +52,7 @@ class Signature
         global $post;
 
         // check excluded post-types
-        if (in_array($post->post_type, $this->excludePostTypes)) {
+        if (is_object($post) && in_array($post->post_type, $this->excludePostTypes)) {
             return $uri;
         }
 
