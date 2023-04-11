@@ -98,7 +98,6 @@ function rewrite_media_to_s3_select_field_2_render()
 
 function rewrite_media_to_s3_signature_section_intro()
 {
-
     echo __('<strong>The AWS SDK is required to sign urls.</strong><br>The settings in this section define behaviour for the url signature feature provided by AWS S3.', 'wordpress');
 }
 
