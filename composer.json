@@ -3,12 +3,17 @@
     "description": "A WordPress plugin which rewrites media attachment URLs to S3.",
     "type": "wordpress-plugin",
     "require": {
-        "composer/installers": "^1.0"
+        "php": "^8.1",
+        "composer/installers": "^v2.0"
     },
     "authors": [
         {
             "name": "Ollie Treend",
             "email": "ollie.treend@digital.justice.gov.uk"
+        },
+        {
+            "name": "Damien Wilson",
+            "email": "damien.wilson@digital.justice.gov.uk"
         }
     ],
     "require-dev": {
