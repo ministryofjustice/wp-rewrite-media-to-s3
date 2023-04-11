@@ -20,7 +20,7 @@ class Signature
     /**
      * @var array
      */
-    private $excludePostTypes = [];
+    private array $excludePostTypes = [];
 
     public function __construct()
     {
@@ -45,9 +45,8 @@ class Signature
     /**
      * Get a signed URL
      * @param $uri
-     * @return string
      */
-    public function uri($uri)
+    public function uri($uri): string
     {
         global $post;
 
@@ -61,7 +60,7 @@ class Signature
             return $uri;
         }
 
-        $url_parts = parse_url($uri);
+        $url_parts = parse_url((string) $uri);
         if (!empty($url_parts['query'])) {
             parse_str($url_parts['query'], $query_parts);
             if (isset($query_parts['X-Amz-Content-Sha256'])) {
@@ -71,7 +70,7 @@ class Signature
 
         $uri = ltrim($url_parts['path'], '/');
 
-        if (strpos($uri, 'uploads') === false) {
+        if (!str_contains($uri, 'uploads')) {
             $uri = 'uploads/' . ltrim($uri, '/');
         }
 
@@ -95,14 +94,11 @@ class Signature
         return (string)$request->getUri();
     }
 
-    /**
-     * @return array
-     */
-    private function excluded()
+    private function excluded(): array
     {
         $options = get_option('rewrite_media_to_s3_settings', []);
         if (isset($options['exclusion_list_of_cpt']) && !empty($options['exclusion_list_of_cpt'])) {
-            $excluded = explode(',', str_replace(' ', '', $options['exclusion_list_of_cpt']));
+            $excluded = explode(',', str_replace(' ', '', (string) $options['exclusion_list_of_cpt']));
             if (is_array($excluded)) {
                 return $excluded;
             }
