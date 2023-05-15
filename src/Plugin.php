@@ -49,8 +49,13 @@ class Plugin
     /**
      * Filter the attachment Image src URL.
      */
-    public function wpGetAttachmentImageSrc(array $image): array
+    public function wpGetAttachmentImageSrc(array|false $image): array
     {
+        if (!$image) {
+            // nothing to rewrite
+            return $image;
+        }
+
         $url = $this->rewrite->url($image[0]);
         $image[0] = $url;
         return $image;
