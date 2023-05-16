@@ -49,7 +49,7 @@ class Plugin
     /**
      * Filter the attachment Image src URL.
      */
-    public function wpGetAttachmentImageSrc(array|false $image): array
+    public function wpGetAttachmentImageSrc(array|false $image): array|false
     {
         if (!$image) {
             // nothing to rewrite
